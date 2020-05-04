@@ -11,6 +11,7 @@ import (
 	"v2ray.com/core/app/policy"
 	"v2ray.com/core/app/proxyman"
 	"v2ray.com/core/app/router"
+	"v2ray.com/core/app/stats"
 	logLevel "v2ray.com/core/common/log"
 	"v2ray.com/core/common/net"
 	"v2ray.com/core/common/serial"
@@ -133,6 +134,7 @@ func initApp() []*serial.TypedMessage {
 				},
 			},
 		}),
+		serial.ToTypedMessage(&stats.Config{}),
 		// init
 		serial.ToTypedMessage(&dispatcher.Config{}),
 		serial.ToTypedMessage(&proxyman.InboundConfig{}),
