@@ -12,5 +12,6 @@
     "--disable=gosec",
     "--disable=interfacer",
     "--deadline=5m"
-  ]
+  ],
+  "go.testEnvFile": "${workspaceFolder}/.env"
 }
