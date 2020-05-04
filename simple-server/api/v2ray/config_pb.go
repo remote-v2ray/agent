@@ -107,7 +107,10 @@ func initApp() []*serial.TypedMessage {
 	// dns
 	dnsService := initAppDNS()
 	// 设置日志
-	logService := serial.ToTypedMessage(&log.Config{ErrorLogLevel: logLevel.Severity_Debug})
+	logService := serial.ToTypedMessage(&log.Config{
+		ErrorLogLevel: logLevel.Severity_Debug,
+		ErrorLogType:  log.LogType_Console,
+	})
 	return []*serial.TypedMessage{
 		dnsService,
 		routeService,
