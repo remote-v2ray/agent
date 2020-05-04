@@ -32,6 +32,8 @@ func Init(c *core.Instance) (err error) {
 	lum.StatsManager = sm
 	lum.MemoryUserManager = um
 
+	go lum.StartScheduledTask()
+
 	return
 }
 
