@@ -8,60 +8,29 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
-	"path/filepath"
 	"runtime"
 	"syscall"
 
 	"github.com/remote-v2ray/agent/remote"
 	"v2ray.com/core"
-	"v2ray.com/core/common/platform"
 
 	_ "github.com/remote-v2ray/agent/cmd/distro/v2wss"
 )
 
 var (
-	configFile = flag.String("config", "", "Config file for V2Ray.")
-	version    = flag.Bool("version", false, "Show current version of V2Ray.")
-	test       = flag.Bool("test", false, "Test config file only, without launching V2Ray server.")
+	version = flag.Bool("version", false, "Show current version of V2Ray.")
+	test    = flag.Bool("test", false, "Test config file only, without launching V2Ray server.")
 )
 
-func fileExists(file string) bool {
-	info, err := os.Stat(file)
-	return err == nil && !info.IsDir()
-}
-
-func getConfigFilePath() string {
-	if len(*configFile) > 0 {
-		return *configFile
-	}
-
-	if workingDir, err := os.Getwd(); err == nil {
-		configFile := filepath.Join(workingDir, "config.json")
-		if fileExists(configFile) {
-			return configFile
-		}
-	}
-
-	if configFile := platform.GetConfigurationPath(); fileExists(configFile) {
-		return configFile
-	}
-
-	return ""
-}
-
-func GetConfigFormat() string {
-	return "protobuf"
-}
-
 func startV2Ray() (core.Server, error) {
-	configFile := getConfigFilePath()
+	configFile := "stdin:"
 	pbconfig, err := remote.GetNodeConfig()
 	if err != nil || len(pbconfig) == 0 {
 		return nil, newError("failed to load config: ", configFile).Base(err)
 	}
 	configInput := bytes.NewReader(pbconfig)
 
-	config, err := core.LoadConfig(GetConfigFormat(), configFile, configInput)
+	config, err := core.LoadConfig("protobuf", configFile, configInput)
 	if err != nil {
 		return nil, newError("failed to read config file: ", configFile).Base(err)
 	}
