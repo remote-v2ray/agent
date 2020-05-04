@@ -128,7 +128,8 @@ func initApp() []*serial.TypedMessage {
 			},
 			System: &policy.SystemPolicy{
 				Stats: &policy.SystemPolicy_Stats{
-					InboundUplink: true,
+					InboundUplink:   true,
+					InboundDownlink: true,
 				},
 			},
 		}),
