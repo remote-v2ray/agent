@@ -8,6 +8,12 @@ import (
 	"v2ray.com/core"
 )
 
+func init() {
+	if err := api.Init(); err != nil {
+		panic(err)
+	}
+}
+
 func Init(c *core.Instance) (err error) {
 	return manager.Init(c)
 }

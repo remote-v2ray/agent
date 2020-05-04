@@ -10,11 +10,6 @@ import (
 var endpoint string
 var authHeader req.Header
 
-func init() {
-	if err := Init(); err != nil {
-		panic(err)
-	}
-}
 
 func Init() (err error) {
 	endpoint = os.Getenv("APIEndpoint")
