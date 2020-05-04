@@ -8,6 +8,7 @@ import (
 	"v2ray.com/core/app/dispatcher"
 	"v2ray.com/core/app/dns"
 	"v2ray.com/core/app/log"
+	"v2ray.com/core/app/policy"
 	"v2ray.com/core/app/proxyman"
 	"v2ray.com/core/app/router"
 	logLevel "v2ray.com/core/common/log"
@@ -115,6 +116,22 @@ func initApp() []*serial.TypedMessage {
 		dnsService,
 		routeService,
 		logService,
+		// 开启统计
+		serial.ToTypedMessage(&policy.Config{
+			Level: map[uint32]*policy.Policy{
+				0: &policy.Policy{
+					Stats: &policy.Policy_Stats{
+						UserUplink:   true,
+						UserDownlink: true,
+					},
+				},
+			},
+			System: &policy.SystemPolicy{
+				Stats: &policy.SystemPolicy_Stats{
+					InboundUplink: true,
+				},
+			},
+		}),
 		// init
 		serial.ToTypedMessage(&dispatcher.Config{}),
 		serial.ToTypedMessage(&proxyman.InboundConfig{}),
