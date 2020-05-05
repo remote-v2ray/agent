@@ -6,7 +6,7 @@ import (
 
 func GetNodeConfig() (config []byte, err error) {
 
-	res, err := req.Get(endpoint, authHeader, req.Header{"v2wss-action": "GetPbConfig"})
+	res, err := req.Get(endpoint, req.Header{"v2wss-action": "GetPbConfig"})
 	if err != nil {
 		return
 	}

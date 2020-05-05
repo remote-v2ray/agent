@@ -10,7 +10,7 @@ func PushStats(stats [][]interface{}) (err error) {
 	body := req.BodyJSON(map[string]interface{}{
 		"stats": stats,
 	})
-	res, err := req.Post(endpoint, body, authHeader, req.Header{"v2wss-action": "PushStats"})
+	res, err := req.Post(endpoint, body, req.Header{"v2wss-action": "PushStats"})
 	if err != nil {
 		return
 	}

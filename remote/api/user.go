@@ -17,7 +17,7 @@ func GetUser(utoken string) (user V2rayNodeUser, err error) {
 	params := req.Param{
 		"user": utoken,
 	}
-	res, err := req.Get(endpoint, params, authHeader, req.Header{"v2wss-action": "GetUser"})
+	res, err := req.Get(endpoint, params, req.Header{"v2wss-action": "GetUser"})
 	if err != nil {
 		return
 	}

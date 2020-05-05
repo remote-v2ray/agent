@@ -3,13 +3,9 @@ package api
 import (
 	"net/url"
 	"os"
-
-	"github.com/imroc/req"
 )
 
 var endpoint string
-var authHeader req.Header
-
 
 func Init() (err error) {
 	endpoint = os.Getenv("APIEndpoint")
@@ -27,10 +23,6 @@ func Init() (err error) {
 		err = newError("query param `node` is required")
 		return
 	}
-
-	u.RawQuery = ""
-	endpoint = u.String()
-	authHeader = req.Header{"v2wss-node": node}
 
 	return
 
